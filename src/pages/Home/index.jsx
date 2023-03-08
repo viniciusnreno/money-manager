@@ -8,7 +8,7 @@ export function Home(){
   const [items, setItems] = useState([]);
 
   return (
-    <div className="container mx-auto text-center">
+    <div className="container mx-auto text-center px-3">
       <h1 className="text-4xl font-bold mt-8 mb-7">Money Manager</h1>
 
       <ItemData setItems={setItems}/>
