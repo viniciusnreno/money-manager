@@ -1,6 +1,7 @@
 
 import { Item } from "../../components/Item";
 import { ItemData } from "../../components/ItemData";
+import { Total } from "../../components/Total";
 import React, { useState } from "react";
 
 export function Home(){
@@ -14,6 +15,8 @@ export function Home(){
       {
         items.map(item => <Item key={item.id} category={item.category} name={item.name} price={item.price} date={item.date}/>)
       }
+
+      <Total items={items}/>
       
     </div>
   );
