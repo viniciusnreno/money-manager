@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from 'react'
-import nextId  from "react-id-generator";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from '../../config/firebase'
 
 export function ItemData(props){
   const [itemCategory, setItemCategory] = useState('');
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemDate, setItemDate] = useState('');
+  const itensRef = collection(db, 'itens');
 
-  function handleAddItem(){
+
+  const handleAddItem = async () => {
     const newItem = {
       name: itemName,
       price: itemPrice,
       date: itemDate,
       category: itemCategory,
-      id: nextId()
     }
     props.setItems(prevState => [...prevState, newItem])
+    
+    await addDoc(itensRef, {
+      ...newItem
+    })
   }
 
-  useEffect(() => {
-    console.log('ItemData')
-  }, [])
 
   return (
     <div className="flex mb-4">
@@ -38,13 +41,13 @@ export function ItemData(props){
         />
         <input 
           className="p-2.5 w-14 md:w-20 z-20 text-sm text-gray-900 bg-gray-50 border-l-gray-100 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="R$" required 
-          type="money"
+          type="number"
           id="item-price"
           onChange={e => setItemPrice(e.target.value)}
         />
         <input 
-          className="p-2.5 w-14 md:w-20 z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-100 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Date" required 
-          type="data"
+          className="p-2.5 w-14 md:w-20 z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-100 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Date" 
+          type="text"
           id="item-date"
           onChange={e => setItemDate(e.target.value)}
         />
